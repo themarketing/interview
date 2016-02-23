@@ -10,7 +10,7 @@ function applyQuestion(dom: HTMLElement, obj, fn): HTMLElement {
         if (typeof obj[`author`][`url`] !== "undefined") {
             getContextFromHTTP(obj[`author`][`url`], (subdom) => {
                 getJSONLDs(subdom).map((obj) => {
-                    fn(dom, obj);
+                    applyPerson(dom, obj);
                 });
             });
         }
