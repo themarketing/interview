@@ -1,9 +1,31 @@
 "use strict";
+
 function initQuestion(dom, obj) {
     applyQuestion(dom, obj, (dom, obj) => {
         //applyPerson(dom, obj);
         addDOM(dom);
     });
+}
+function applyPerson2(dom: HTMLElement, obj): HTMLElement {
+    if (typeof obj[`image`] === "undefined") {
+        obj[`image`] = ``;
+    }
+    if (obj[`@type`] === `Person`) {
+        [
+            { selector: ".questionperson", after: obj[`@id`], fn: changeID },
+            { selector: ".rpQuestionPersonName", after: getAuthorName(obj[`name`]), fn: changeTXT },
+            { selector: ".rpQuestionPersonImage", after: obj[`image`], fn: changeSRC },
+            { selector: ".rpQuestionPersonURL", after: obj[`url`], fn: changeURL },
+            { selector: ".answerperson", after: obj[`@id`], fn: changeID },
+            { selector: ".rpAnswerPersonName", after: getAuthorName(obj[`name`]), fn: changeTXT },
+            { selector: ".rpAnswerPersonImage", after: obj[`image`], fn: changeSRC },
+            { selector: ".rpAnswerPersonURL", after: obj[`url`], fn: changeURL }
+        ].map((a) => {
+            return applyDOM(dom, a);
+        });
+    }
+    //addDOM(dom);
+    return dom;
 }
 function applyQuestion(dom: HTMLElement, obj, fn): HTMLElement {
     if (obj[`@type`] === `Question`) {
