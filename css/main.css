@@ -17,7 +17,12 @@
   text-align: center;
   width:5rem;
 }
-.person>a>img{
+.questionperson>a>img{
+  border-radius: 50%;
+  width:4rem;
+  height:4rem;
+}
+.answerperson>a>img{
   border-radius: 50%;
   width:4rem;
   height:4rem;
