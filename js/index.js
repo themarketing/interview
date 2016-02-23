@@ -1,7 +1,6 @@
 "use strict";
 function initQuestion(dom, obj) {
     applyQuestion(dom, obj, function (dom, obj) {
-        applyPerson(dom, obj);
         addDOM(dom);
     });
 }
