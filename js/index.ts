@@ -12,6 +12,8 @@ function applyPerson2(obj, subobj): any {
             obj[`image`] = subobj[`image`];
         }
     }
+    console.log(obj);
+    console.log(subobj);
     return obj;
 }
 function applyQuestion(dom: HTMLElement, obj, fn): HTMLElement {
