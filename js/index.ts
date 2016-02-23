@@ -33,10 +33,10 @@ function a(obj, aa, fn2) {
 function applyQuestion(dom: HTMLElement, obj, fn): HTMLElement {
     if (obj["@type"] === "Question") {
         if (typeof obj["author"]["image"] === "undefined") {
-            obj["author"]["image"] = "";
+            obj["author"]["image"] = "https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_person_black_48px.svg";
         }
         if (typeof obj["acceptedAnswer"]["author"]["image"] === "undefined") {
-            obj["acceptedAnswer"]["author"]["image"] = "";
+            obj["acceptedAnswer"]["author"]["image"] = "https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_person_black_48px.svg";
         }
         a(obj, obj["author"]["url"], (obj) => {
             a(obj, obj["acceptedAnswer"]["author"]["url"], (obj) => {
