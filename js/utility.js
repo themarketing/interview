@@ -152,3 +152,61 @@ function initModuleFromSelf(tmpl, fn) {
         });
     });
 }
+function initQuestion(dom, obj) {
+    applyQuestion(dom, obj, function (dom, obj) {
+        addDOM(dom);
+    });
+}
+function applyPersonObj(obj, subobj) {
+    if (subobj["@type"] === "Person") {
+        if (typeof subobj["image"] !== "undefined") {
+            if (subobj["url"] === obj["author"]["url"]) {
+                obj["author"]["image"] = subobj["image"];
+            }
+            if (subobj["url"] === obj["acceptedAnswer"]["author"]["url"]) {
+                obj["acceptedAnswer"]["author"]["image"] = subobj["image"];
+            }
+        }
+    }
+    return obj;
+}
+function loopA(obj, str, fn, fn2) {
+    if (typeof str !== "undefined") {
+        getContextFromHTTP(str, function (subdom) {
+            getJSONLDs(subdom).map(function (subobj) {
+                fn(obj, subobj);
+                fn2(obj);
+            });
+        });
+    }
+    else {
+        fn2(obj);
+    }
+}
+function applyQuestion(dom, obj, fn) {
+    if (obj["@type"] === "Question") {
+        if (typeof obj["author"]["image"] === "undefined") {
+            obj["author"]["image"] = "https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_person_black_48px.svg";
+        }
+        if (typeof obj["acceptedAnswer"]["author"]["image"] === "undefined") {
+            obj["acceptedAnswer"]["author"]["image"] = "https://storage.googleapis.com/material-icons/external-assets/v4/icons/svg/ic_person_black_48px.svg";
+        }
+        loopA(obj, obj["author"]["url"], applyPersonObj, function (obj) {
+            loopA(obj, obj["acceptedAnswer"]["author"]["url"], applyPersonObj, function (obj) {
+                [
+                    { selector: ".rpQuestionText", after: obj["text"], fn: changeTXT },
+                    { selector: ".rpAnswerText", after: obj["acceptedAnswer"]["text"], fn: changeTXT },
+                    { selector: ".rpQuestionPersonName", after: getAuthorName(obj["author"]), fn: changeTXT },
+                    { selector: ".rpAnswerPersonName", after: getAuthorName(obj["acceptedAnswer"]["author"]), fn: changeTXT },
+                    { selector: ".rpQuestionPersonImage", after: obj["author"]["image"], fn: changeSRC },
+                    { selector: ".rpAnswerPersonImage", after: obj["acceptedAnswer"]["author"]["image"], fn: changeSRC }
+                ].map(function (a) {
+                    return applyDOM(dom, a);
+                });
+                if (typeof obj["author"]["url"] === "undefined") {
+                    fn(dom, obj);
+                }
+            });
+        });
+    }
+}
