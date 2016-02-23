@@ -24,12 +24,10 @@ function a(obj, aa, fn2) {
             getJSONLDs(subdom).map((subobj) => {
                 applyPerson2(obj, subobj);
                 fn2(obj);
-                return obj;
             });
         });
     } else {
         fn2(obj);
-        return obj;
     }
 }
 function applyQuestion(dom: HTMLElement, obj, fn): HTMLElement {
@@ -55,7 +53,6 @@ function applyQuestion(dom: HTMLElement, obj, fn): HTMLElement {
                 if (typeof obj[`author`][`url`] === "undefined") {
                     fn(dom, obj);
                 }
-
             });
         });
 

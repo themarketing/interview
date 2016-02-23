@@ -23,13 +23,11 @@ function a(obj, aa, fn2) {
             getJSONLDs(subdom).map(function (subobj) {
                 applyPerson2(obj, subobj);
                 fn2(obj);
-                return obj;
             });
         });
     }
     else {
         fn2(obj);
-        return obj;
     }
 }
 function applyQuestion(dom, obj, fn) {
