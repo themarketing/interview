@@ -33,6 +33,13 @@ function applyQuestion(dom, obj, fn) {
                 });
             });
         }
+        if (typeof obj["acceptedAnswer"]["author"]["url"] !== "undefined") {
+            getContextFromHTTP(obj["acceptedAnswer"]["author"]["url"], function (subdom) {
+                getJSONLDs(subdom).map(function (obj) {
+                    applyPerson2(dom, obj);
+                });
+            });
+        }
         [
             { selector: ".rpQuestionText", after: obj["text"], fn: changeTXT },
             { selector: ".rpAnswerText", after: obj["acceptedAnswer"]["text"], fn: changeTXT },

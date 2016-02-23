@@ -36,6 +36,13 @@ function applyQuestion(dom: HTMLElement, obj, fn): HTMLElement {
                 });
             });
         }
+        if (typeof obj[`acceptedAnswer`][`author`][`url`] !== "undefined") {
+            getContextFromHTTP(obj[`acceptedAnswer`][`author`][`url`], (subdom) => {
+                getJSONLDs(subdom).map((obj) => {
+                    applyPerson2(dom, obj);
+                });
+            });
+        }
         [
             { selector: ".rpQuestionText", after: obj[`text`], fn: changeTXT },
             { selector: ".rpAnswerText", after: obj[`acceptedAnswer`][`text`], fn: changeTXT },
