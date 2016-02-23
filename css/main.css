@@ -10,7 +10,14 @@
   display: table;
   box-shadow: 2px 2px 6px #888888;
 }
-.person{
+.questionperson{
+  display:table-cell;
+  vertical-align:middle;
+  padding:1rem;
+  text-align: center;
+  width:5rem;
+}
+.answerperson{
   display:table-cell;
   vertical-align:middle;
   padding:1rem;
