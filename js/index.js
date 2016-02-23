@@ -4,39 +4,27 @@ function initQuestion(dom, obj) {
         addDOM(dom);
     });
 }
-function applyPerson2(dom, obj) {
-    if (typeof obj["image"] === "undefined") {
-        obj["image"] = "";
-    }
+function applyPerson2(obj, subobj) {
     if (obj["@type"] === "Person") {
-        [
-            { selector: ".questionperson", after: obj["@id"], fn: changeID },
-            { selector: ".rpQuestionPersonName", after: getAuthorName(obj["name"]), fn: changeTXT },
-            { selector: ".rpQuestionPersonImage", after: obj["image"], fn: changeSRC },
-            { selector: ".rpQuestionPersonURL", after: obj["url"], fn: changeURL },
-            { selector: ".answerperson", after: obj["@id"], fn: changeID },
-            { selector: ".rpAnswerPersonName", after: getAuthorName(obj["name"]), fn: changeTXT },
-            { selector: ".rpAnswerPersonImage", after: obj["image"], fn: changeSRC },
-            { selector: ".rpAnswerPersonURL", after: obj["url"], fn: changeURL }
-        ].map(function (a) {
-            return applyDOM(dom, a);
-        });
+        if (typeof subobj["image"] !== "undefined") {
+            obj["image"] = subobj["image"];
+        }
     }
-    return dom;
+    return obj;
 }
 function applyQuestion(dom, obj, fn) {
     if (obj["@type"] === "Question") {
         if (typeof obj["author"]["url"] !== "undefined") {
             getContextFromHTTP(obj["author"]["url"], function (subdom) {
-                getJSONLDs(subdom).map(function (obj) {
-                    applyPerson2(dom, obj);
+                getJSONLDs(subdom).map(function (subobj) {
+                    obj = applyPerson2(obj, subobj);
                 });
             });
         }
         if (typeof obj["acceptedAnswer"]["author"]["url"] !== "undefined") {
             getContextFromHTTP(obj["acceptedAnswer"]["author"]["url"], function (subdom) {
-                getJSONLDs(subdom).map(function (obj) {
-                    applyPerson2(dom, obj);
+                getJSONLDs(subdom).map(function (subobj) {
+                    obj = applyPerson2(obj, subobj);
                 });
             });
         }
