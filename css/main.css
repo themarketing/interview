@@ -1,14 +1,14 @@
 .reviewitemname{
 }
-.question{
+.qa{
   margin: 1rem;
   display: table;
   box-shadow: 2px 2px 6px #888888;
 }
+.question{
+  border-bottom: solid 1px #eee;
+}
 .answer{
-  margin: 1rem;
-  display: table;
-  box-shadow: 2px 2px 6px #888888;
 }
 .questionperson{
   display:table-cell;
